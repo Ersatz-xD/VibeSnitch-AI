@@ -50,8 +50,13 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: #1a1328;
-border-radius: 20px;
+    <string notr="true">QFrame#mainCard {
+background-color: #1a1328;
+	border: 2px solid#26183d;
+	border-radius: 20px;
+}
+
+
 </string>
    </property>
    <property name="frameShape">
@@ -78,17 +83,19 @@ border-radius: 20px;
       <property name="font">
        <font>
         <family>Segoe UI</family>
-        <pointsize>36</pointsize>
+        <pointsize>42</pointsize>
         <weight>75</weight>
         <bold>true</bold>
        </font>
       </property>
       <property name="styleSheet">
        <string notr="true">color: #dbd2d4;
+background-color: #1a1328;
+
 </string>
       </property>
       <property name="text">
-       <string>🕵️ Vibe Snitch</string>
+       <string>Vibe Snitch</string>
       </property>
       <property name="scaledContents">
        <bool>false</bool>
@@ -119,7 +126,10 @@ border-radius: 20px;
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">color: #dbd2d4;</string>
+       <string notr="true">color: #dbd2d4;
+background-color: #1a1328;
+
+</string>
       </property>
       <property name="text">
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drop their posts, and we’ll snitch their vibes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
