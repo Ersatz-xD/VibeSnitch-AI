@@ -11,6 +11,7 @@ class Ui_InputWindow(object):
         InputWindow.setStyleSheet("QWidget {\n"
 " \n"
 "background-color: #1a1328;\n"
+"border-radius: 20px;\n"
 "}")
         self.mainCard = QtWidgets.QFrame(InputWindow)
         self.mainCard.setGeometry(QtCore.QRect(0, 0, 960, 540))
@@ -18,6 +19,8 @@ class Ui_InputWindow(object):
         self.mainCard.setMaximumSize(QtCore.QSize(960, 540))
         self.mainCard.setStyleSheet("QFrame#mainCard {\n"
 "background-color: #1a1328;\n"
+"border-radius: 20px;\n"
+"border: 2px solid #26183d;\n"
 "}\n"
 "\n"
 "\n"
