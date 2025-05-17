@@ -268,7 +268,7 @@ background-color: #1a1328;
          <string notr="true">QProgressBar {
     border: 1px solid #52057B;
     border-radius: 10px;
-    background-color: #892CDC;
+    background-color: #2d2146;
     height: 20px;
     text-align: center;
 }
@@ -280,7 +280,7 @@ QProgressBar::chunk {
 </string>
         </property>
         <property name="value">
-         <number>90</number>
+         <number>80</number>
         </property>
         <property name="textVisible">
          <bool>false</bool>
@@ -331,7 +331,7 @@ background-color: #1a1328;
             <string notr="true">
     background-color: #892CDC;
     color: #dbd2d4;
-    border-radius: 30px;
+    border-radius: 10px;
     padding: 6px 12px;
 
 </string>
@@ -362,7 +362,7 @@ background-color: #1a1328;
             <string notr="true">
     background-color: #892CDC;
     color: #dbd2d4;
-    border-radius: 30px;
+    border-radius: 10px;
     padding: 6px 12px;
 </string>
            </property>
@@ -391,7 +391,7 @@ background-color: #1a1328;
            <property name="styleSheet">
             <string notr="true">  background-color: #892CDC;
     color: #dbd2d4;
-    border-radius: 30px;
+    border-radius: 10px;
     padding: 6px 12px;
 </string>
            </property>
@@ -441,7 +441,7 @@ background-color: #1a1328;
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <item>
-             <widget class="QLabel" name="lblStrengths">
+             <widget class="QLabel" name="lblRelationship">
               <property name="font">
                <font>
                 <family>Segoe UI</family>
@@ -451,10 +451,33 @@ background-color: #1a1328;
                </font>
               </property>
               <property name="styleSheet">
+               <string notr="true">QLabel#lblRelationship{
+	color: #dbd2d4;
+    margin-bottom: 6px;
+}
+</string>
+              </property>
+              <property name="text">
+               <string>❤️ Relationship Behavior</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblRelationshipDescription">
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
                <string notr="true">color: #dbd2d4;</string>
               </property>
               <property name="text">
-               <string>Strengths</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Warm and enthusiastic, seeks deep emotional connections &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -462,11 +485,185 @@ background-color: #1a1328;
           </widget>
          </item>
          <item>
-          <widget class="QWidget" name="Weaknesses" native="true">
+          <widget class="QWidget" name="Compatibility" native="true">
            <property name="styleSheet">
             <string notr="true">
  background-color: transparent;</string>
            </property>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <item>
+             <widget class="QLabel" name="lblCompatibility">
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>14</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QLabel#lblCompatibility{
+	color: #dbd2d4;
+    margin-bottom: 6px;
+}</string>
+              </property>
+              <property name="text">
+               <string>🤝 Friend Compatibility</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QWidget" name="widget_4" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">margin 0;
+padding 0;</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_2">
+               <item row="0" column="0">
+                <widget class="QLabel" name="comp_1">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>125</width>
+                   <height>70</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Segoe UI</family>
+                   <pointsize>11</pointsize>
+                   <weight>50</weight>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLabel{  
+ background-color: #892CDC;
+    color: #dbd2d4;
+    padding: 0px 12px;
+    border-radius: 8px;
+    margin-right: 8px;
+}
+</string>
+                 </property>
+                 <property name="text">
+                  <string>INFJ 85%</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="comp_3">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>125</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Segoe UI</family>
+                   <pointsize>11</pointsize>
+                   <weight>50</weight>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLabel{  
+ background-color: #892CDC;
+    color: #dbd2d4;
+    padding: 0px 12px;
+    border-radius: 8px;
+    margin-right: 8px;
+}</string>
+                 </property>
+                 <property name="text">
+                  <string>ENFJ 88%</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLabel" name="comp_2">
+                 <property name="maximumSize">
+                  <size>
+                   <width>125</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Segoe UI</family>
+                   <pointsize>11</pointsize>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLabel{  
+ background-color: #892CDC;
+    color: #dbd2d4;
+    padding: 0px 12px;
+    border-radius: 8px;
+    margin-right: 8px;
+}</string>
+                 </property>
+                 <property name="text">
+                  <string>ENTP 81%</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLabel" name="comp_4">
+                 <property name="font">
+                  <font>
+                   <family>Segoe UI</family>
+                   <pointsize>11</pointsize>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLabel{  
+ background-color: #892CDC;
+    color: #dbd2d4;
+    padding: 0px 12px;
+    border-radius: 8px;
+    margin-right: 8px;
+}</string>
+                 </property>
+                 <property name="text">
+                  <string>ENFP 50%</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>
