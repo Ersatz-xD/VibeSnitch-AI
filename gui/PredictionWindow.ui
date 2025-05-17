@@ -27,7 +27,8 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget {
-    background-color: #1a1328;;
+    background-color: #1a1328;
+border-radius: 20px;
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -48,6 +49,7 @@
      <property name="styleSheet">
       <string notr="true">QFrame#mainCard {
 background-color: #1a1328;
+border-radius: 20px;
 }
 </string>
      </property>
