@@ -27,8 +27,8 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget {
- 
-background-color: #1a1328;
+       border-radius: 20px;
+       background-color: #1a1328;
 }</string>
   </property>
   <widget class="QFrame" name="mainCard">
@@ -54,7 +54,9 @@ background-color: #1a1328;
    </property>
    <property name="styleSheet">
     <string notr="true">QFrame#mainCard {
-background-color: #1a1328;
+    background-color: #1a1328;
+    border-radius: 20px;
+    border: 2px solid #26183d;
 }
 
 
