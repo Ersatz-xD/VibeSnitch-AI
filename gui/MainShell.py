@@ -1,6 +1,20 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QGraphicsDropShadowEffect
+from PyQt5.QtGui import QColor
+
+# Add drop shadow to stackedWidget
+shadow = QGraphicsDropShadowEffect()
+shadow.setBlurRadius(50)
+shadow.setOffset(0, 0)
+shadow.setColor(QColor(0, 0, 0, 150))
+
+# Drop shadow for headerFrame
+header_shadow = QGraphicsDropShadowEffect()
+header_shadow.setBlurRadius(30)
+header_shadow.setOffset(0, 0)
+header_shadow.setColor(QColor(0, 0, 0, 120))
 
 
 class Ui_MainShell(object):
@@ -25,6 +39,7 @@ class Ui_MainShell(object):
         self.headerFrame.setGeometry(QtCore.QRect(180, 50, 960, 80))
         self.headerFrame.setMinimumSize(QtCore.QSize(960, 80))
         self.headerFrame.setMaximumSize(QtCore.QSize(960, 80))
+        self.headerFrame.setGraphicsEffect(header_shadow)
         self.headerFrame.setStyleSheet("QFrame#headerFrame {\n"
 "background-color: #1a1328;\n"
 "    border: 2px solid#26183d;\n"
@@ -126,14 +141,7 @@ class Ui_MainShell(object):
 "\n"
 "")
         self.stackedWidget.setObjectName("stackedWidget")
-        self.page = QtWidgets.QWidget()
-        self.page.setStyleSheet("background-color: transparent;")
-        self.page.setObjectName("page")
-        self.stackedWidget.addWidget(self.page)
-        self.page_2 = QtWidgets.QWidget()
-        self.page_2.setStyleSheet("background-color: transparent;")
-        self.page_2.setObjectName("page_2")
-        self.stackedWidget.addWidget(self.page_2)
+        self.stackedWidget.setGraphicsEffect(shadow)
 
         self.retranslateUi(MainShell)
         self.stackedWidget.setCurrentIndex(1)
