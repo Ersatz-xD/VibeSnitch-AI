@@ -22,29 +22,30 @@ def get_personality_report(mbti_type, post_list):
 
         # Prompt with correct structure
         prompt = f"""
-You are part of a personality prediction system that receives a predicted MBTI type and user text samples (e.g., social media posts).
+        You are part of a personality prediction system that receives a predicted MBTI type and user text samples (e.g., social media posts).
 
-Your job is to return a well-structured analysis of the user's personality in JSON format only. Do not include any explanation or non-JSON content.
+        Your job is to return a well-structured analysis of the user's personality in JSON format only. Do not include any explanation or non-JSON content.
 
-Format strictly like this:
+        Format strictly like this:
 
-{{
-  "mbti_type": "MBTI_TYPE",
-  "vibe_summary": "One-line personality summary",
-  "relationship_behavior": "Describe their relationship style",
-  "confidence_score": "High / Medium / Low",
-  "friend_compatibility": ["MBTI1", "MBTI2", "MBTI3, MBTI4"]
-}}
+        {{
+          "mbti_type": "MBTI_TYPE",
+          "vibe_summary": "One-line personality summary",
+          "relationship_behavior": "Describe their relationship style",
+          "confidence_score": "High / Medium / Low",
+          "top_traits": ["Trait1", "Trait2", "Trait3"],
+          "friend_compatibility": ["MBTI1 85%", "MBTI2 72%", "MBTI3 87%", "MBTI4 64%"]
+        }}
 
-Use the text samples below and the given MBTI type to make your predictions.
+        Use the text samples below and the given MBTI type to make your predictions.
 
-MBTI Type: {mbti_type}
+        MBTI Type: {mbti_type}
 
-User Posts:
-{post_lines}
+        User Posts:
+        {post_lines}
 
-Return only valid JSON output. No explanation, no extra text.
-"""
+        Return only valid JSON output. No explanation, no extra text.
+        """
 
         # Call Gemini
         response = client.models.generate_content(
