@@ -223,9 +223,9 @@ class Ui_InputWindow(QObject):  # Change inheritance to QObject
         _translate = QtCore.QCoreApplication.translate
         self.lblTitle.setText(_translate("InputWindow", "Vibe Snitch"))
         self.lblSlogan.setText(_translate("InputWindow", "<html><head/><body><p>Drop their posts, and we’ll snitch their vibes.</p></body></html>"))
-        self.label.setText(_translate("InputWindow", "TextLabel"))
+        self.label.setText(_translate("InputWindow", ""))
         self.txtName.setPlaceholderText(_translate("InputWindow", "Their Name"))
-        self.label_2.setText(_translate("InputWindow", "TextLabel"))
+        self.label_2.setText(_translate("InputWindow", ""))
         self.txtPost01.setPlaceholderText(_translate("InputWindow", "Share the thoughts here..."))
         self.txtPost02.setPlaceholderText(_translate("InputWindow", "Share the thoughts here..."))
         self.txtPost03.setPlaceholderText(_translate("InputWindow", "Share the thoughts here..."))
