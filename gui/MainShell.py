@@ -1,8 +1,14 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QGraphicsDropShadowEffect
+from PyQt5.QtWidgets import QGraphicsDropShadowEffect, QMessageBox
 from PyQt5.QtGui import QColor
+from db.db_manager import get_current_user
+from InputWindow import Ui_InputWindow
+from PredictionWindow import Ui_mainForm
+import pickle
+from ai.gemini_wrapper import get_personality_report
+
 
 # Add drop shadow to stackedWidget
 shadow = QGraphicsDropShadowEffect()
@@ -79,6 +85,7 @@ class Ui_MainShell(object):
 "margin-bottom: 3px;\n"
 "")
         self.lblUsername.setObjectName("lblUsername")
+        self.lblUsername.setText(get_current_user())
         self.horizontalLayout.addWidget(self.lblUsername)
         self.pushButton = QtWidgets.QPushButton(self.headerFrame)
         self.pushButton.setMaximumSize(QtCore.QSize(150, 50))
@@ -105,6 +112,7 @@ class Ui_MainShell(object):
         self.pushButton.setIconSize(QtCore.QSize(22, 22))
         self.pushButton.setObjectName("pushButton")
         self.horizontalLayout.addWidget(self.pushButton)
+        self.pushButton.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(0))
         self.pushButton_2 = QtWidgets.QPushButton(self.headerFrame)
         self.pushButton_2.setMaximumSize(QtCore.QSize(200, 50))
         font = QtGui.QFont()
@@ -147,9 +155,51 @@ class Ui_MainShell(object):
         self.stackedWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainShell)
 
+        self.input_widget = QtWidgets.QWidget()
+        self.prediction_widget = QtWidgets.QWidget()
+        self.input_ui = Ui_InputWindow()
+        self.input_ui.predictClicked.connect(self.handlePredictionRequest)
+        self.input_ui.setupUi(self.input_widget)
+        self.prediction_ui = Ui_mainForm()
+        self.prediction_ui.setupUi(self.prediction_widget)
+
+        self.stackedWidget.addWidget(self.input_widget)
+        self.stackedWidget.addWidget(self.prediction_widget)
+        self.stackedWidget.setCurrentIndex(0)
+
+    def handlePredictionRequest(self, name, posts):
+            try:
+                    # --- STEP 1: Join posts for ML pipeline ---
+                    full_text = ' '.join(posts)
+
+                    # --- STEP 2: Load ML pipeline and predict MBTI ---
+                    with open('models/personality_pipeline_lr.pkl', 'rb') as f:
+                            pipeline = pickle.load(f)
+
+                    mbti_type = pipeline.predict([full_text])[0]  # e.g., "INTP"
+
+                    # --- STEP 3: Get Gemini personality report ---
+                    report = get_personality_report(mbti_type, posts)
+
+                    if report is None:
+                            raise Exception("Gemini API failed or returned invalid JSON.")
+
+                    # --- STEP 4: Send results to PredictionWindow ---
+                    self.prediction_ui.set_prediction(name, mbti_type, report)
+
+                    # --- STEP 5: Switch to prediction screen ---
+                    self.stackedWidget.setCurrentIndex(1)
+
+            except FileNotFoundError:
+                    QMessageBox.critical(None, "Model Error", "❌ Model file not found. Check the 'models' folder.")
+            except pickle.UnpicklingError:
+                    QMessageBox.critical(None, "Model Error", "❌ Failed to load the model file. It might be corrupted.")
+            except Exception as e:
+                    print("❌ Error during prediction:", str(e))
+                    QMessageBox.critical(None, "Prediction Error", f"Something went wrong:\n{str(e)}")
+
     def retranslateUi(self, MainShell):
         _translate = QtCore.QCoreApplication.translate
         MainShell.setWindowTitle(_translate("MainShell", "Vibe Snitch - AI"))
-        self.lblUsername.setText(_translate("MainShell", "Ayaan Ahmed"))
         self.pushButton.setText(_translate("MainShell", " Home"))
         self.pushButton_2.setText(_translate("MainShell", " Saved Results"))
