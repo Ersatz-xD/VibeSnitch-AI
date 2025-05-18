@@ -1,12 +1,13 @@
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import QObject  # Add this import
 
+class Ui_InputWindow(QObject):  # Change inheritance to QObject
+    predictClicked = QtCore.pyqtSignal(str, list)
 
+    def __init__(self):
+        super().__init__()
 
-class Ui_InputWindow(object):
-    predictClicked = pyqtSignal(str, list)
     def setupUi(self, InputWindow):
         InputWindow.setObjectName("InputWindow")
         InputWindow.resize(960, 540)
@@ -189,17 +190,33 @@ class Ui_InputWindow(object):
         self.retranslateUi(InputWindow)
         QtCore.QMetaObject.connectSlotsByName(InputWindow)
 
-
     def send_data_to_main(self):
-        name = self.txtName.text()
-        posts = [
-            self.txtPost01.text(),
-            self.txtPost02.text(),
-            self.txtPost03.text(),
-            self.txtPost04.text(),
-            self.txtPost05.text()
-        ]
-        self.predictClicked.emit(name, posts)
+        try:
+            name = self.txtName.text().strip()
+            posts = [
+                self.txtPost01.text().strip(),
+                self.txtPost02.text().strip(),
+                self.txtPost03.text().strip(),
+                self.txtPost04.text().strip(),
+                self.txtPost05.text().strip()
+            ]
+
+            # Filter out empty posts
+            posts = [p for p in posts if p]
+
+            # Validate inputs
+            if not name:
+                QtWidgets.QMessageBox.warning(None, "Input Error", "Please enter a name")
+                return
+
+            if len(posts) < 1:
+                QtWidgets.QMessageBox.warning(None, "Input Error", "Please enter at least one post")
+                return
+
+            self.predictClicked.emit(name, posts)
+
+        except Exception as e:
+            QtWidgets.QMessageBox.critical(None, "Error", f"Failed to process input: {str(e)}")
 
 
     def retranslateUi(self, InputWindow):
