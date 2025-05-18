@@ -358,19 +358,46 @@ class Ui_mainForm(object):
         self.retranslateUi(mainForm)
         QtCore.QMetaObject.connectSlotsByName(mainForm)
 
+    def set_prediction(self, name, mbti_type, report):
+            # Set the user's name
+            self.lblName.setText(name)
+
+            # Set the MBTI type label
+            self.lblMbtiType.setText(mbti_type)
+
+            # Set the summary text
+            self.txtSummary.setPlainText(report.get('vibe_summary', ''))
+
+            # Set confidence score label and progress bar
+            confidence = report.get('confidence', 0)  # Expecting value 0-100
+            self.lblConfidenceScore.setText(f"Confidence Level: {confidence}%")
+            self.confidanceBar.setValue(confidence)
+
+            # Set traits (assuming list of traits in report)
+            traits = report.get('top_traits', [])
+            # Fill trait labels or clear if missing
+            self.lblTrait_1.setText(traits[0] if len(traits) > 0 else '')
+            self.lblTrait_2.setText(traits[1] if len(traits) > 1 else '')
+            self.lblTrait_3.setText(traits[2] if len(traits) > 2 else '')
+
+            # Set relationship behavior description
+            relationship = report.get('relationship_behavior', '')
+            self.lblRelationshipDescription.setText(relationship)
+
+            # Set compatibility types
+            compatible = report.get('friend_compatibility', [])
+            self.comp_1.setText(compatible[0] if len(compatible) > 0 else "N/A")
+            self.comp_2.setText(compatible[1] if len(compatible) > 1 else "N/A")
+            self.comp_3.setText(compatible[2] if len(compatible) > 2 else "N/A")
+            self.comp_4.setText(compatible[3] if len(compatible) > 3 else "N/A")
+
+
     def retranslateUi(self, mainForm):
         _translate = QtCore.QCoreApplication.translate
         self.lblHeader.setText(_translate("mainForm", "🧠 Personality Insights"))
         self.lblSubtitle.setText(_translate("mainForm", "<html><head/><body><p>Here\'s what their vibe says about them...</p></body></html>"))
-        self.lblMbtiType.setText(_translate("mainForm", "ENFP"))
-        self.lblSummary.setText(_translate("mainForm", "A spontaneous soul with a thirst for connection and creativity."))
-        self.lblConfidenceScore.setText(_translate("mainForm", "<html><head/><body><p>Confidence Level: High</p></body></html>"))
         self.lblConfidenceScore_2.setText(_translate("mainForm", "<html><head/><body><p>Top Traits</p></body></html>"))
-        self.lblTrait_1.setText(_translate("mainForm", "Adventurous"))
-        self.lblTrait_2.setText(_translate("mainForm", "Empathetic"))
-        self.lblTrait_3.setText(_translate("mainForm", "Creative"))
         self.lblRelationship.setText(_translate("mainForm", "❤️ Relationship Behavior"))
-        self.lblRelationshipDescription.setText(_translate("mainForm", "<html><head/><body><p>Warm and enthusiastic, seeks deep emotional connections </p></body></html>"))
         self.lblCompatibility.setText(_translate("mainForm", "🤝 Friend Compatibility"))
         self.comp_1.setText(_translate("mainForm", "INFJ 85%"))
         self.comp_3.setText(_translate("mainForm", "ENFJ 88%"))
