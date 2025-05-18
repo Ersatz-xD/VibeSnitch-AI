@@ -1,9 +1,12 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import pyqtSignal
+
 
 
 class Ui_InputWindow(object):
+    predictClicked = pyqtSignal(str, list)
     def setupUi(self, InputWindow):
         InputWindow.setObjectName("InputWindow")
         InputWindow.resize(960, 540)
@@ -160,6 +163,7 @@ class Ui_InputWindow(object):
         self.txtPost05.setObjectName("txtPost05")
         self.verticalLayout_2.addWidget(self.txtPost05)
         self.pushButton = QtWidgets.QPushButton(self.mainCard)
+        self.pushButton.clicked.connect(self.send_data_to_main)
         self.pushButton.setMinimumSize(QtCore.QSize(0, 50))
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
@@ -184,6 +188,19 @@ class Ui_InputWindow(object):
 
         self.retranslateUi(InputWindow)
         QtCore.QMetaObject.connectSlotsByName(InputWindow)
+
+
+    def send_data_to_main(self):
+        name = self.txtName.text()
+        posts = [
+            self.txtPost01.text(),
+            self.txtPost02.text(),
+            self.txtPost03.text(),
+            self.txtPost04.text(),
+            self.txtPost05.text()
+        ]
+        self.predictClicked.emit(name, posts)
+
 
     def retranslateUi(self, InputWindow):
         _translate = QtCore.QCoreApplication.translate
