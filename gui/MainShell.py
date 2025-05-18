@@ -10,18 +10,6 @@ import pickle
 from ai.gemini_wrapper import get_personality_report
 
 
-# Add drop shadow to stackedWidget
-shadow = QGraphicsDropShadowEffect()
-shadow.setBlurRadius(50)
-shadow.setOffset(0, 0)
-shadow.setColor(QColor(0, 0, 0, 150))
-
-# Drop shadow for headerFrame
-header_shadow = QGraphicsDropShadowEffect()
-header_shadow.setBlurRadius(30)
-header_shadow.setOffset(0, 0)
-header_shadow.setColor(QColor(0, 0, 0, 120))
-
 
 class Ui_MainShell(object):
     def setupUi(self, MainShell):
@@ -41,11 +29,21 @@ class Ui_MainShell(object):
 "        stop:1 #151321\n"
 "    );\n"
 "}")
+        self.shadow = QGraphicsDropShadowEffect()
+        self.shadow.setBlurRadius(50)
+        self.shadow.setOffset(0, 0)
+        self.shadow.setColor(QColor(0, 0, 0, 150))
+
+        self.header_shadow = QGraphicsDropShadowEffect()
+        self.header_shadow.setBlurRadius(30)
+        self.header_shadow.setOffset(0, 0)
+        self.header_shadow.setColor(QColor(0, 0, 0, 120))
+
         self.headerFrame = QtWidgets.QFrame(MainShell)
         self.headerFrame.setGeometry(QtCore.QRect(180, 50, 960, 80))
         self.headerFrame.setMinimumSize(QtCore.QSize(960, 80))
         self.headerFrame.setMaximumSize(QtCore.QSize(960, 80))
-        self.headerFrame.setGraphicsEffect(header_shadow)
+        self.headerFrame.setGraphicsEffect(self.header_shadow)
         self.headerFrame.setStyleSheet("QFrame#headerFrame {\n"
 "background-color: #1a1328;\n"
 "    border: 2px solid#26183d;\n"
@@ -149,55 +147,89 @@ class Ui_MainShell(object):
 "\n"
 "")
         self.stackedWidget.setObjectName("stackedWidget")
-        self.stackedWidget.setGraphicsEffect(shadow)
+        self.stackedWidget.setGraphicsEffect(self.shadow)
 
         self.retranslateUi(MainShell)
         self.stackedWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainShell)
 
+        # Create the widgets and their UIs
         self.input_widget = QtWidgets.QWidget()
         self.prediction_widget = QtWidgets.QWidget()
-        self.input_ui = Ui_InputWindow()
-        self.input_ui.predictClicked.connect(self.handlePredictionRequest)
+
+        # Initialize the UI classes - modified to ensure proper QObject hierarchy
+        self.input_ui = Ui_InputWindow()  # Now properly inherits from QObject
         self.input_ui.setupUi(self.input_widget)
+
         self.prediction_ui = Ui_mainForm()
         self.prediction_ui.setupUi(self.prediction_widget)
 
+        # Add widgets to stacked widget
         self.stackedWidget.addWidget(self.input_widget)
         self.stackedWidget.addWidget(self.prediction_widget)
         self.stackedWidget.setCurrentIndex(0)
 
+        # Connect navigation signals
+        self.pushButton.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(0))
+
+        # Connect signal with error handling
+        try:
+                self.input_ui.predictClicked.connect(self.handlePredictionRequest)
+        except Exception as e:
+                QtWidgets.QMessageBox.critical(None, "Connection Error",
+                                               f"Failed to connect signals: {str(e)}")
+                print(f"Signal connection error: {str(e)}")
+
     def handlePredictionRequest(self, name, posts):
             try:
-                    # --- STEP 1: Join posts for ML pipeline ---
+                    # Additional input validation
+                    if not name or not isinstance(name, str):
+                            raise ValueError("Invalid name provided")
+
+                    if not posts or not isinstance(posts, list):
+                            raise ValueError("Posts must be a non-empty list")
+
+                    # Show processing message
+                    processing_msg = QtWidgets.QMessageBox()
+                    processing_msg.setWindowTitle("Processing")
+                    processing_msg.setText("Analyzing personality...")
+                    processing_msg.setStandardButtons(QtWidgets.QMessageBox.NoButton)
+                    processing_msg.show()
+                    QtWidgets.QApplication.processEvents()  # Keep UI responsive
+
+                    # --- Your existing prediction code here ---
                     full_text = ' '.join(posts)
 
-                    # --- STEP 2: Load ML pipeline and predict MBTI ---
-                    with open('models/personality_pipeline_lr.pkl', 'rb') as f:
-                            pipeline = pickle.load(f)
+                    try:
+                            with open('../models/personality_pipeline_lr.pkl', 'rb') as f:
+                                    pipeline = pickle.load(f)
+                            mbti_type = pipeline.predict([full_text])[0]
+                    except Exception as e:
+                            processing_msg.close()
+                            QtWidgets.QMessageBox.critical(None, "Model Error", f"Prediction failed: {str(e)}")
+                            return
 
-                    mbti_type = pipeline.predict([full_text])[0]  # e.g., "INTP"
+                    try:
+                            report = get_personality_report(mbti_type, posts)
+                            if not report:
+                                    raise ValueError("Empty report generated")
+                    except Exception as e:
+                            processing_msg.close()
+                            QtWidgets.QMessageBox.critical(None, "API Error", f"Report generation failed: {str(e)}")
+                            return
 
-                    # --- STEP 3: Get Gemini personality report ---
-                    report = get_personality_report(mbti_type, posts)
+                    # Update UI
+                    try:
+                            self.prediction_ui.set_prediction(name, mbti_type, report)
+                            self.stackedWidget.setCurrentIndex(1)
+                    except Exception as e:
+                            QtWidgets.QMessageBox.critical(None, "Display Error", f"Failed to show results: {str(e)}")
 
-                    if report is None:
-                            raise Exception("Gemini API failed or returned invalid JSON.")
+                    processing_msg.close()
 
-                    # --- STEP 4: Send results to PredictionWindow ---
-                    self.prediction_ui.set_prediction(name, mbti_type, report)
-
-                    # --- STEP 5: Switch to prediction screen ---
-                    self.stackedWidget.setCurrentIndex(1)
-
-            except FileNotFoundError:
-                    QMessageBox.critical(None, "Model Error", "❌ Model file not found. Check the 'models' folder.")
-            except pickle.UnpicklingError:
-                    QMessageBox.critical(None, "Model Error", "❌ Failed to load the model file. It might be corrupted.")
             except Exception as e:
-                    print("❌ Error during prediction:", str(e))
-                    QMessageBox.critical(None, "Prediction Error", f"Something went wrong:\n{str(e)}")
-
+                    QtWidgets.QMessageBox.critical(None, "Error", f"Personality analysis failed: {str(e)}")
+                    print(f"Error details: {str(e)}")
     def retranslateUi(self, MainShell):
         _translate = QtCore.QCoreApplication.translate
         MainShell.setWindowTitle(_translate("MainShell", "Vibe Snitch - AI"))
