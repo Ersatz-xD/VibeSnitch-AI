@@ -16,7 +16,6 @@ class Ui_mainForm(object):
         self.gridLayout = QtWidgets.QGridLayout(mainForm)
         self.gridLayout.setObjectName("gridLayout")
         self.mainCard = QtWidgets.QFrame(mainForm)
-        self.mainCard.setGeometry(QtCore.QRect(0, 0, 960, 540))
         self.mainCard.setMinimumSize(QtCore.QSize(960, 540))
         self.mainCard.setMaximumSize(QtCore.QSize(960, 540))
         self.mainCard.setStyleSheet("QFrame#mainCard {\n"
