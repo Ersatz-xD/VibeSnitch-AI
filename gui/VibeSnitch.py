@@ -1,6 +1,7 @@
 import sys
 from PyQt5 import QtWidgets
 from LoginWindow import Ui_LoginWindow
+from ai.text_cleaner import TextCleaner
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
