@@ -5,21 +5,27 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_mainForm(object):
     def setupUi(self, mainForm):
         mainForm.setObjectName("mainForm")
-        mainForm.resize(978, 558)
+        mainForm.resize(960, 540)
         mainForm.setMinimumSize(QtCore.QSize(960, 540))
-        mainForm.setMaximumSize(QtCore.QSize(978, 558))
+        mainForm.setMaximumSize(QtCore.QSize(960, 540))
         mainForm.setWindowTitle("Vibe Sbitch - Personality Prediction")
         mainForm.setStyleSheet("QWidget {\n"
-"    background-color: #1a1328;;\n"
+"       border-radius: 20px;\n"
+"       background-color: #1a1328;\n"
 "}")
         self.gridLayout = QtWidgets.QGridLayout(mainForm)
         self.gridLayout.setObjectName("gridLayout")
         self.mainCard = QtWidgets.QFrame(mainForm)
+        self.mainCard.setGeometry(QtCore.QRect(0, 0, 960, 540))
         self.mainCard.setMinimumSize(QtCore.QSize(960, 540))
         self.mainCard.setMaximumSize(QtCore.QSize(960, 540))
         self.mainCard.setStyleSheet("QFrame#mainCard {\n"
-"background-color: #1a1328;\n"
+"    background-color: #1a1328;\n"
+"    border-radius: 20px;\n"
+"    border: 2px solid #26183d;\n"
 "}\n"
+"\n"
+"\n"
 "")
         self.mainCard.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.mainCard.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -57,8 +63,8 @@ class Ui_mainForm(object):
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.widget_2)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.mbtiBox = QtWidgets.QFrame(self.widget_2)
-        self.mbtiBox.setMinimumSize(QtCore.QSize(500, 80))
-        self.mbtiBox.setMaximumSize(QtCore.QSize(500, 120))
+        self.mbtiBox.setMinimumSize(QtCore.QSize(900, 80))
+        self.mbtiBox.setMaximumSize(QtCore.QSize(1000, 120))
         self.mbtiBox.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.mbtiBox.setStyleSheet("QFrame#mbtiBox {\n"
 "    background-color: transparent;\n"
@@ -360,18 +366,19 @@ class Ui_mainForm(object):
 
     def set_prediction(self, name, mbti_type, report):
             # Set the user's name
-            self.lblName.setText(name)
+            name = name if name else "Anonymous"
 
             # Set the MBTI type label
-            self.lblMbtiType.setText(mbti_type)
+            self.lblMbtiType.setText(str(mbti_type))
 
             # Set the summary text
-            self.txtSummary.setPlainText(report.get('vibe_summary', ''))
+            self.lblSummary.setText(report.get('vibe_summary', ''))
 
             # Set confidence score label and progress bar
-            confidence = report.get('confidence', 0)  # Expecting value 0-100
-            self.lblConfidenceScore.setText(f"Confidence Level: {confidence}%")
-            self.confidanceBar.setValue(confidence)
+            confidence = report.get('confidence_score', '')
+            confidence_val = 90 if confidence == 'High' else 60 if confidence == 'Medium' else 30 if confidence == 'Low' else 0
+            self.lblConfidenceScore.setText(f"Confidence Level: {confidence}")
+            self.confidanceBar.setValue(confidence_val)
 
             # Set traits (assuming list of traits in report)
             traits = report.get('top_traits', [])
