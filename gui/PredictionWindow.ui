@@ -149,7 +149,13 @@ background-color: #1a1328;
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>70</height>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>60</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -164,7 +170,7 @@ background-color: #1a1328;
                  <property name="minimumSize">
                   <size>
                    <width>180</width>
-                   <height>60</height>
+                   <height>50</height>
                   </size>
                  </property>
                  <property name="maximumSize">
@@ -185,7 +191,7 @@ background-color: #1a1328;
                   <string notr="true">QLabel {
     color: #dbd2d4;
     background-color: #892CDC;
-    padding: 8px 24px;
+    padding: 4px 24px;
     border-radius: 18px;
 }
 </string>
