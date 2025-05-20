@@ -8,6 +8,8 @@ from InputWindow import Ui_InputWindow
 from PredictionWindow import Ui_mainForm
 import pickle
 from ai.gemini_wrapper import get_personality_report
+from ai.text_cleaner import TextCleaner
+
 
 
 
@@ -203,7 +205,12 @@ class Ui_MainShell(object):
                     try:
                             with open('../models/personality_pipeline_lr.pkl', 'rb') as f:
                                     pipeline = pickle.load(f)
-                            mbti_type = pipeline.predict([full_text])[0]
+                            with open('../models/label_encoder.pkl', 'rb') as f:
+                                    label_encoder = pickle.load(f)
+
+                            mbti_type_label = pipeline.predict([full_text])[0]
+                            mbti_type = label_encoder.inverse_transform([mbti_type_label])[0]
+
                     except Exception as e:
                             processing_msg.close()
                             QtWidgets.QMessageBox.critical(None, "Model Error", f"Prediction failed: {str(e)}")
