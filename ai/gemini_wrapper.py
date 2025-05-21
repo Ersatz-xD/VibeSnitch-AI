@@ -15,7 +15,7 @@ def get_personality_report(mbti_type, post_list):
     try:
 
         posts = [p.strip() for p in post_list if p.strip()]
-        posts = posts[:5]
+
 
 
         post_lines = '\n'.join([f"{i+1}. “{p}”" for i, p in enumerate(posts)])
@@ -57,7 +57,7 @@ def get_personality_report(mbti_type, post_list):
         response_text = response.text.strip()
 
         if response_text.startswith("```json"):
-            response_text = response_text[len("```json"):]
+            response_text = response_text[7:]
 
         if response_text.endswith("```"):
             response_text = response_text[:-3]
