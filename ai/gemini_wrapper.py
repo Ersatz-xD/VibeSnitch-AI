@@ -13,14 +13,14 @@ client = genai.Client(api_key=key)
 
 def get_personality_report(mbti_type, post_list):
     try:
-        # Ensure max 5 clean posts
+
         posts = [p.strip() for p in post_list if p.strip()]
         posts = posts[:5]
 
-        # Format them as numbered list
+
         post_lines = '\n'.join([f"{i+1}. “{p}”" for i, p in enumerate(posts)])
 
-        # Prompt with correct structure
+        # Prompt
         prompt = f"""
         You are part of a personality prediction system that receives a predicted MBTI type and user text samples (e.g., social media posts).
 
@@ -47,7 +47,7 @@ def get_personality_report(mbti_type, post_list):
         Return only valid JSON output. No explanation, no extra text.
         """
 
-        # Call Gemini
+
         response = client.models.generate_content(
             model="gemini-2.0-flash",
             contents=prompt,
@@ -64,7 +64,7 @@ def get_personality_report(mbti_type, post_list):
 
         response_text = response_text.strip()
 
-        # Convert response to dictionary
+
         json_data = json.loads(response_text)
         return json_data
 
