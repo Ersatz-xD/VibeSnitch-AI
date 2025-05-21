@@ -3,15 +3,12 @@ import pymysql
 from pymysql.err import MySQLError
 from dotenv import load_dotenv
 
-# Load environment variables
 load_dotenv()
 
-# Global connection and user info
 _connection = None
 _current_user = None
 _current_user_id = None
 
-# === User Session Management ===
 
 def set_current_user(username, user_id):
     global _current_user, _current_user_id
@@ -39,7 +36,7 @@ def get_user_id(username):
         if cursor:
             cursor.close()
 
-# === Connection Management ===
+
 
 def get_connection():
     global _connection
@@ -66,7 +63,6 @@ def close_connection():
         _connection.close()
         _connection = None
 
-# === Auth Functions ===
 
 def login_user(username, password):
     cursor = None
@@ -108,34 +104,10 @@ def signup_user(username, password):
         if cursor:
             cursor.close()
 
-# === Prediction Saving and Retrieval ===
 
 def save_prediction_result(result):
-    cursor = None
-    try:
-        conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute("""
-            INSERT INTO results (
-                user_id, name, personality_type, confidence_level,
-                top_traits, relationship_behavior
-            ) VALUES (%s, %s, %s, %s, %s, %s)
-        """, (
-            _current_user_id,
-            result['name'],
-            result['mbti_type'],
-            result['confidence'],
-            ', '.join(result['traits']),
-            result['relationship_behavior']
-        ))
-        conn.commit()
-    except MySQLError as e:
-        print("Save Prediction Error:", e)
-    finally:
-        if cursor:
-            cursor.close()
+    'save data for db for a user'
 
 def get_saved_results(user_id):
     'retreive data from db for a user'
-    cursor = None
 
