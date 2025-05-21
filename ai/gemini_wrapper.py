@@ -7,7 +7,7 @@ import json
 load_dotenv()
 key= os.getenv("GEMINI_API_KEY")
 if not key:
-    raise ValueError("❌ GEMINI_API_KEY not found in environment variables.")
+    raise ValueError(" GEMINI_API_KEY not found in environment variables.")
 
 client = genai.Client(api_key=key)
 
@@ -69,8 +69,8 @@ def get_personality_report(mbti_type, post_list):
         return json_data
 
     except json.JSONDecodeError:
-        print("⚠️ Gemini returned invalid JSON:\n", response_text)
+        print(" Gemini returned invalid JSON:\n", response_text)
         return None
     except Exception as e:
-        print("❌ Gemini API Error:", str(e))
+        print(" Gemini API Error:", str(e))
         return None
