@@ -15,7 +15,7 @@ report = get_personality_report(sample_mbti, sample_posts)
 
 # Print the response
 if report:
-    print("✅ Gemini Personality Report:")
+    print(" Gemini Personality Report:")
     print(report)
 else:
-    print("❌ Failed to get valid response.")
+    print(" Failed to get valid response.")
