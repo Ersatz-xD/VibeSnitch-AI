@@ -84,6 +84,12 @@ class Ui_SavedResultsWindow(object):
             print("No user is logged in.")
             return
 
+        while self.verticalLayout_results.count(): #delete existing
+            item = self.verticalLayout_results.takeAt(0)
+            widget = item.widget()
+            if widget is not None:
+                widget.deleteLater()
+
         saved_results = get_saved_results(user_id)
 
         for result in saved_results:
