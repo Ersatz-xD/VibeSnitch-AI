@@ -1,6 +1,8 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from db.db_manager import save_prediction_result
+
 
 class Ui_mainForm(object):
     def setupUi(self, mainForm):
@@ -399,6 +401,16 @@ class Ui_mainForm(object):
             self.comp_2.setText(compatible[1] if len(compatible) > 1 else "N/A")
             self.comp_3.setText(compatible[2] if len(compatible) > 2 else "N/A")
             self.comp_4.setText(compatible[3] if len(compatible) > 3 else "N/A")
+
+            #save into db
+            result = {
+                    'name': name,
+                    'mbti_type': mbti_type,
+                    'confidence': confidence,
+                    'traits': traits,
+                    'relationship_behavior': relationship
+            }
+            save_prediction_result(result)
 
 
     def retranslateUi(self, mainForm):
