@@ -9,9 +9,11 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from ResultsCardWidget import ResultsCardWidget
+from db.db_manager import get_saved_results, get_current_user_id
 
 
-class Ui_SavedResultWindow(object):
+class Ui_SavedResultsWindow(object):
     def setupUi(self, SavedResultWindow):
         SavedResultWindow.setObjectName("SavedResultWindow")
         SavedResultWindow.resize(960, 540)
@@ -68,6 +70,31 @@ class Ui_SavedResultWindow(object):
 
         self.retranslateUi(SavedResultWindow)
         QtCore.QMetaObject.connectSlotsByName(SavedResultWindow)
+
+        self.retranslateUi(SavedResultWindow)
+        QtCore.QMetaObject.connectSlotsByName(SavedResultWindow)
+
+        # dynamic content loader
+        self.load_saved_results()
+
+
+    def load_saved_results(self):
+        user_id = get_current_user_id()
+        if not user_id:
+            print("No user is logged in.")
+            return
+
+        saved_results = get_saved_results(user_id)
+
+        for result in saved_results:
+            card = ResultsCardWidget(
+                personality_type=result["personality_type"],
+                name=result["name"],
+                description=result["relationship_behavior"],  # Using it as description
+                confidence_level=result["confidence_level"]
+            )
+            self.verticalLayout_results.addWidget(card)
+
 
     def retranslateUi(self, SavedResultWindow):
         _translate = QtCore.QCoreApplication.translate
