@@ -177,7 +177,7 @@ class Ui_MainShell(object):
 
         # Connect navigation signals
         self.pushButton.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(0))
-        self.pushButton_2.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(2))
+        self.pushButton_2.clicked.connect(self.handle_result)
 
         # Connect signal with error handling
         try:
@@ -242,6 +242,17 @@ class Ui_MainShell(object):
             except Exception as e:
                     QtWidgets.QMessageBox.critical(None, "Error", f"Personality analysis failed: {str(e)}")
                     print(f"Error details: {str(e)}")
+
+    def handle_result(self, result):
+        try:
+            self.saved_results_ui.load_saved_results()
+            self.stackedWidget.setCurrentIndex(2)
+            print("Result displayed")
+        except Exception as e:
+            QtWidgets.QMessageBox.critical(None, "Display Error", f"Failed to show results: {str(e)}")
+            print(f"Error details: {str(e)}")
+
+
     def retranslateUi(self, MainShell):
         _translate = QtCore.QCoreApplication.translate
         MainShell.setWindowTitle(_translate("MainShell", "Vibe Snitch - AI"))
