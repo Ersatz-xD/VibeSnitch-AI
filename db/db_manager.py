@@ -106,6 +106,28 @@ def signup_user(username, password):
 
 def save_prediction_result(result):
     'save data for db for a user'
+    cursor = None
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+                       INSERT INTO results (user_id, name, personality_type, confidence_level,
+                                            top_traits, relationship_behavior)
+                       VALUES (%s, %s, %s, %s, %s, %s)
+                       """, (
+                           _current_user_id,
+                           result['name'],
+                           result['mbti_type'],
+                           result['confidence'],
+                           ', '.join(result['traits']),
+                           result['relationship_behavior']
+                       ))
+        conn.commit()
+    except MySQLError as e:
+        print("Save Prediction Error:", e)
+    finally:
+        if cursor:
+            cursor.close()
 
 def get_saved_results(user_id):
     'retreive data from db for a user'
