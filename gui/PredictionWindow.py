@@ -252,6 +252,7 @@ class Ui_mainForm(object):
         font.setFamily("Segoe UI")
         font.setPointSize(12)
         self.lblRelationshipDescription.setFont(font)
+        self.lblRelationshipDescription.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
         self.lblRelationshipDescription.setStyleSheet("color: #dbd2d4;")
         self.lblRelationshipDescription.setWordWrap(True)
         self.lblRelationshipDescription.setObjectName("lblRelationshipDescription")
