@@ -109,4 +109,22 @@ def save_prediction_result(result):
 
 def get_saved_results(user_id):
     'retreive data from db for a user'
+    cursor = None
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+                       SELECT name, personality_type, confidence_level, relationship_behavior
+                       FROM results
+                       WHERE user_id = %s
+                       ORDER BY saved_on DESC
+                       """, (user_id,))
+        results = cursor.fetchall()
+        return results
+    except MySQLError as e:
+        print("Error fetching saved results:", e)
+        return []
+    finally:
+        if cursor:
+            cursor.close()
 
