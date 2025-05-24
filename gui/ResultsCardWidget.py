@@ -47,6 +47,7 @@ class ResultsCardWidget(QWidget):
 
         self.confidence_label = QLabel(f"Confidence Level: {confidence_level}")
         self.progress = QProgressBar()
+        self.progress.setTextVisible(False)
         self.progress.setMaximum(100)
         self.progress.setValue(self.confidence_to_value(confidence_level))
         self.progress.setStyleSheet("""
