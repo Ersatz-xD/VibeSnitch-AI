@@ -31,7 +31,7 @@ def get_personality_report(mbti_type, post_list):
         {{
           "mbti_type": "MBTI_TYPE",
           "vibe_summary": "One-line personality summary",
-          "relationship_behavior": "Describe their relationship style",
+          "relationship_behavior": "Describe their relationship style (max words 30)",
           "confidence_score": "High / Medium / Low",
           "top_traits": ["Trait1", "Trait2", "Trait3"],
           "friend_compatibility": ["MBTI1 85%", "MBTI2 72%", "MBTI3 87%", "MBTI4 64%"]
