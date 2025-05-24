@@ -9,8 +9,7 @@ from PredictionWindow import Ui_mainForm
 import pickle
 from ai.gemini_wrapper import get_personality_report
 from ai.text_cleaner import TextCleaner
-
-
+from SavedResultsWindow import Ui_SavedResultsWindow
 
 
 class Ui_MainShell(object):
@@ -158,6 +157,7 @@ class Ui_MainShell(object):
         # Create the widgets and their UIs
         self.input_widget = QtWidgets.QWidget()
         self.prediction_widget = QtWidgets.QWidget()
+        self.saved_results_widget = QtWidgets.QWidget()
 
         # Initialize the UI classes - modified to ensure proper QObject hierarchy
         self.input_ui = Ui_InputWindow()  # Now properly inherits from QObject
@@ -166,13 +166,18 @@ class Ui_MainShell(object):
         self.prediction_ui = Ui_mainForm()
         self.prediction_ui.setupUi(self.prediction_widget)
 
+        self.saved_results_ui = Ui_SavedResultsWindow()
+        self.saved_results_ui.setupUi(self.saved_results_widget)
+
         # Add widgets to stacked widget
         self.stackedWidget.addWidget(self.input_widget)
         self.stackedWidget.addWidget(self.prediction_widget)
+        self.stackedWidget.addWidget(self.saved_results_widget)
         self.stackedWidget.setCurrentIndex(0)
 
         # Connect navigation signals
         self.pushButton.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(0))
+        self.pushButton_2.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(2))
 
         # Connect signal with error handling
         try:
