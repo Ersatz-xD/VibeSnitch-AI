@@ -47,8 +47,22 @@ Built with **Python** and **PyQt** for the GUI, and **MySQL** for persistent dat
 - Required Python packages (install via pip):
 
 ```bash
-pip install PyQt5 mysql-connector-python scikit-learn pandas
+pip install -r requirements.txt
 ````
+
+### Environment Variables Setup
+
+Create a .env file in the project root with the following variables to configure your database and Gemini API access:
+
+```env
+DB_HOST=your_database_host
+DB_USER=your_database_username
+DB_PASSWORD=your_database_password
+DB_NAME=your_database_name
+
+GEMINI_API_KEY=your_gemini_api_key
+````
+Make sure to replace the placeholders with your actual credentials
 
 ### Database Setup
 
