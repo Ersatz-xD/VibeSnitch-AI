@@ -214,6 +214,12 @@ class Ui_InputWindow(QObject):  # Change inheritance to QObject
                 return
 
             self.predictClicked.emit(name, posts)
+            self.txtName.setText('')
+            self.txtPost01.setText('')
+            self.txtPost02.setText('')
+            self.txtPost03.setText('')
+            self.txtPost04.setText('')
+            self.txtPost05.setText('')
 
         except Exception as e:
             QtWidgets.QMessageBox.critical(None, "Error", f"Failed to process input: {str(e)}")
