@@ -189,7 +189,7 @@ class Ui_LoginWindow(object):
         username = self.txtUsername.text()
         password = self.txtPass.text()
         if not username or not password:
-            QMessageBox.warning(self.SignupWindow, "Warning", "Please enter your username and password")
+            QMessageBox.warning(self.LoginWindow, "Warning", "Please enter your username and password")
             return
         else:
             try:
@@ -200,7 +200,7 @@ class Ui_LoginWindow(object):
                     self.main_shell.show()
                     self.LoginWindow.close()
                 else:
-                    QMessageBox.warning(self.SignupWindow, "Warning", "Invalid username or password")
+                    QMessageBox.warning(self.LoginWindow, "Warning", "Invalid username or password")
             except Exception as e:
                 print("Exception occurred in handleLogin:", e)
                 QtWidgets.QMessageBox.critical(self.LoginWindow, "Error", "Something went wrong during login.")
