@@ -74,7 +74,7 @@ def login_user(username, password):
             set_current_user(username, result['user_id'])
             return True
         else:
-            print("Invalid credentials")
+            print("Invalid username or password")
             return False
     except MySQLError as e:
         print("Login Error:", e)
