@@ -30,7 +30,7 @@ def get_personality_report(mbti_type, post_list):
 
         {{
           "mbti_type": "MBTI_TYPE",
-          "vibe_summary": "One-line personality summary",
+          "vibe_summary": "One-line personality summary (max words 20)",
           "relationship_behavior": "Describe their relationship style (max words 30)",
           "confidence_score": "High / Medium / Low",
           "top_traits": ["Trait1", "Trait2", "Trait3"],
