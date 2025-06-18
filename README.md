@@ -93,7 +93,7 @@ CREATE TABLE results (
 ### Run the App
 
 1. Clone this repository.
-2. Configure database credentials in `db_manager.py`.
+2. Configure credentials in `.env`.
 3. Launch the Vbe Snitch:
 
 ```bash
