@@ -135,6 +135,15 @@ python VibeSnitch.py
 
 ---
 
+## 🖼️ Project Preview
+
+**Click on it to watch full preview:**
+  
+  [Preview Video](https://www.linkedin.com/posts/ayaan-ahmed-khan-448600351_python-ai-machinelearning-activity-7340256928779907072-tEsE?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFfVGngBAYKwo5foQzxYV3fPtYJUadu7n6o).
+  
+---
+
+
 ## 📬 Contact
 
 For questions or contributions, please contact: [My LinkedIn](https://linkedin.com/in/ayaan-ahmed-khan-448600351).
