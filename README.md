@@ -82,6 +82,7 @@ CREATE TABLE users (
 CREATE TABLE results (
   result_id INT PRIMARY KEY AUTO_INCREMENT,
   user_id INT NOT NULL,
+  name VARCHAR(100),
   personality_type VARCHAR(10) NOT NULL,
   confidence_level VARCHAR(20) NOT NULL,
   top_traits VARCHAR(255) NOT NULL,
